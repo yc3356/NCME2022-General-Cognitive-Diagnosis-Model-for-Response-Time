@@ -1,0 +1,32 @@
+model{
+    for (i in 1:I){
+        # beta 8: 2 * 5
+        logRT[i,1] ~ dnorm(alpha[1] + beta[1,1] * profile[i,2] + beta[1,2] * profile[i,5] + beta[1,3]*profile[i,2]*profile[i,5],inv_epsilon[1])
+        # beta 9: 1 * 5
+        logRT[i,2] ~ dnorm(alpha[2] + beta[2,1] * profile[i,1] + beta[2,2] * profile[i,5] + beta[2,3]*profile[i,1]*profile[i,5],inv_epsilon[2])
+        logRT[i,3] ~ dnorm(alpha[3] + beta[3,1] * profile[i,1] + beta[3,2] * profile[i,5] + beta[3,3]*profile[i,1]*profile[i,5],inv_epsilon[3])
+        # beta 10: 3 * 7
+        logRT[i,4] ~ dnorm(alpha[4] + beta[4,1] * profile[i,3] + beta[4,2] * profile[i,7] + beta[4,3]*profile[i,3]*profile[i,7],inv_epsilon[4])
+        logRT[i,5] ~ dnorm(alpha[5] + beta[5,1] * profile[i,3] + beta[5,2] * profile[i,7] + beta[5,3]*profile[i,3]*profile[i,7],inv_epsilon[5])
+        logRT[i,6] ~ dnorm(alpha[6] + beta[6,1] * profile[i,3] + beta[6,2] * profile[i,7] + beta[6,3]*profile[i,3]*profile[i,7],inv_epsilon[6])
+        logRT[i,7] ~ dnorm(alpha[7] + beta[7,1] * profile[i,3] + beta[7,2] * profile[i,7] + beta[7,3]*profile[i,3]*profile[i,7],inv_epsilon[7])
+        # beta 11: 4 * 6
+        logRT[i,8] ~ dnorm(alpha[8] + beta[8,1] * profile[i,4] + beta[8,2] * profile[i,6] + beta[8,3]*profile[i,4]*profile[i,6],inv_epsilon[8])
+        logRT[i,9] ~ dnorm(alpha[9] + beta[9,1] * profile[i,4] + beta[9,2] * profile[i,6] + beta[9,3]*profile[i,4]*profile[i,6],inv_epsilon[9])
+        logRT[i,10] ~ dnorm(alpha[10] + beta[10,2] * profile[i,4] + beta[10,2] * profile[i,6] + beta[10,3]*profile[i,4]*profile[i,6],inv_epsilon[10])
+
+        c[i] ~ dcat(pai[1:C])
+        profile[i,1:K] <- all.pattern[c[i],1:K]
+    }
+    for (j in 1:J){
+        alpha[j] ~ dnorm(0,0.1) 
+        inv_epsilon[j] ~ dgamma(1,1)
+        epsilon[j] <- 1/inv_epsilon[j]
+        for (k in 1:2){
+            beta[j,k] ~ dnorm(0,0.1) T(0,)
+        }
+        beta[j,3] ~ dnorm(0,0.1) 
+    }
+    pai[1:C] ~ ddirch(delta[1:C])
+    
+}

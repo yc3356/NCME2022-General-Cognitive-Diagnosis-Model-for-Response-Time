@@ -1,0 +1,88 @@
+
+model {
+  # measurement model 
+  for (j in 1:J) {
+    for (i in 1:I) {
+      for (k in 1:K) {w[j, i, k] <- pow(attribute[j, k], Q[i, k])} 
+      # RA model 
+      logit(prob[j, i]) <- f[i] + d[i]*prod(w[j, i, ]) 
+      Y[j, i] ~ dbern(prob[j, i])
+      # RT model
+      logT[j, i] ~ dnorm(sum(b[i, ])- tau[j], tau_epsilon[i]) 
+    }
+  }
+
+  # probability of mastery of attribute k by person j
+  for (j in 1:J) {
+    for (k in 1:K) {
+      logit(att_prob[j, k]) <- lambda1[k]*(theta[j] - lambda0[k])
+      attribute[j, k] ~ dbern(att_prob[j, k]) 
+    }
+  }
+  
+  # sum of attribute time intensity
+  for (i in 1:I) {
+    for (k in 1:K) {b[i, k] <- beta[k]*Q[i, k]}
+  }  
+
+  # priors of person parameters from joint distribution of RA and RT 
+  for (j in 1:J) {
+    person_parameter[j, 1:2] ~ dmnorm(mu_person[1:2], invSigma_person[1:2, 1:2]) 
+    theta[j] <- person_parameter[j, 1] 
+    tau[j] <- person_parameter[j, 2] 
+  } 
+
+  # priors of attribute parameters from joint distribution of RA and RT 
+  for (k in 1:K) {
+    attribute_parameter[k, 1:3] ~ dmnorm(mu_attribute[1:3], invSigma_attribute[1:3, 1:3]) 
+    lambda0[k] <- attribute_parameter[k, 1] 
+    lambda1[k] <- exp(attribute_parameter[k, 2])
+    beta[k] <- attribute_parameter[k, 3]
+  }
+
+  # priors of item parameters  
+  for (i in 1:I) {
+    item_parameter[i, 1] ~ dnorm(-2.197225, 0.5) 
+    item_parameter[i, 2] ~ dnorm(4.394449, 0.5) T(0, ) 
+  
+    f[i] <- item_parameter[i, 1]
+    d[i] <- item_parameter[i, 2]
+    logit(g[i]) <- f[i] 
+    logit(ns[i]) <- f[i] + d[i] 
+    s[i] <- 1 - ns[i] 
+    
+    tau_epsilon[i] ~ dgamma(1, 1) 
+    Sigma_epsilon[i] <- sqrt(1/tau_epsilon[i])
+  }
+
+  # hyperpriors of person parameters 
+  mu_person[1] <- 0 
+  mu_person[2] <- 0 
+
+  Delta_person[1, 1] <- 1
+  Delta_person[2, 2] ~ dgamma(1, 1)
+  Delta_person[2, 1] ~ dnorm(0, 1)
+  Delta_person[1, 2] <- 0
+  
+  Sigma_person <- Delta_person %*% t(Delta_person) 
+  invSigma_person[1:2, 1:2] <- inverse(Sigma_person[1:2, 1:2])
+  
+  # hyperpriors of attribute parameters
+  mu_attribute[1] ~ dnorm(0, 0.25) 
+  mu_attribute[2] ~ dnorm(0, 0.7213475) 
+  mu_attribute[3] ~ dnorm(3, 0.5) 
+  
+  R[1, 1] <- 1 
+  R[2, 2] <- 1
+  R[3, 3] <- 1
+  R[1, 2] <- 0
+  R[1, 3] <- 0
+  R[2, 1] <- 0
+  R[2, 3] <- 0
+  R[3, 1] <- 0
+  R[3, 2] <- 0
+  
+  invSigma_attribute[1:3, 1:3] ~ dwish(R[1:3, 1:3], 3) 
+  Sigma_attribute[1:3, 1:3] <- inverse(invSigma_attribute[1:3, 1:3]) 
+  } # end model loop
+

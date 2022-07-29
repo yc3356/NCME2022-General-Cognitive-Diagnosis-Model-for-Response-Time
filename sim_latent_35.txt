@@ -1,0 +1,167 @@
+model{
+    for (i in 1:I){
+        c[i] ~ dcat(pai[1:C])
+        profile[i,1:K] <- all.pattern[c[i],1:K]
+        logRT[i,1] ~ dnorm(alpha[1] + beta.1.1 * profile[i,1],inv_epsilon[1])
+        logRT[i,2] ~ dnorm(alpha[2] + beta.2.2 * profile[i,2],inv_epsilon[2])
+        logRT[i,3] ~ dnorm(alpha[3] + beta.3.3 * profile[i,3],inv_epsilon[3])
+        logRT[i,4] ~ dnorm(alpha[4] + beta.4.1 * profile[i,1] + beta.4.2 * profile[i,2] + beta.4.12 * profile[i,1]* profile[i,2],inv_epsilon[4])
+        logRT[i,5] ~ dnorm(alpha[5] + beta.5.1 * profile[i,1] + beta.5.3 * profile[i,3] + beta.5.13 * profile[i,1]* profile[i,3],inv_epsilon[5])
+        logRT[i,6] ~ dnorm(alpha[6] + beta.6.2 * profile[i,2] + beta.6.3 * profile[i,3] + beta.6.23 * profile[i,2]* profile[i,3],inv_epsilon[6])
+        logRT[i,7] ~ dnorm(alpha[7] + beta.7.1 * profile[i,1] + beta.7.2 * profile[i,2] + beta.7.3 * profile[i,3] + 
+                           beta.7.12 * profile[i,1]* profile[i,2] + beta.7.13 * profile[i,1]* profile[i,3] + beta.7.23 * profile[i,2]* profile[i,3] + 
+                           beta.7.123 * profile[i,1]* profile[i,2] * profile[i,3], inv_epsilon[7])
+                           
+        logRT[i,8] ~ dnorm(alpha[8] + beta.8.1 * profile[i,1],inv_epsilon[8])
+        logRT[i,9] ~ dnorm(alpha[9] + beta.9.2 * profile[i,2],inv_epsilon[9])
+        logRT[i,10] ~ dnorm(alpha[10] + beta.10.3 * profile[i,3],inv_epsilon[10])
+        logRT[i,11] ~ dnorm(alpha[11] + beta.11.1 * profile[i,1] + beta.11.2 * profile[i,2] + beta.11.12 * profile[i,1]* profile[i,2],inv_epsilon[11])
+        logRT[i,12] ~ dnorm(alpha[12] + beta.12.1 * profile[i,1] + beta.12.3 * profile[i,3] + beta.12.13 * profile[i,1]* profile[i,3],inv_epsilon[12])
+        logRT[i,13] ~ dnorm(alpha[13] + beta.13.2 * profile[i,2] + beta.13.3 * profile[i,3] + beta.13.23 * profile[i,2]* profile[i,3],inv_epsilon[13])
+        logRT[i,14] ~ dnorm(alpha[14] + beta.14.1 * profile[i,1] + beta.14.2 * profile[i,2] + beta.14.3 * profile[i,3] + 
+                           beta.14.12 * profile[i,1]* profile[i,2] + beta.14.13 * profile[i,1]* profile[i,3] + beta.14.23 * profile[i,2]* profile[i,3] + 
+                           beta.14.123 * profile[i,1]* profile[i,2] * profile[i,3], inv_epsilon[14])
+        
+        logRT[i,15] ~ dnorm(alpha[15] + beta.15.1 * profile[i,1],inv_epsilon[15])
+        logRT[i,16] ~ dnorm(alpha[16] + beta.16.2 * profile[i,2],inv_epsilon[16])
+        logRT[i,17] ~ dnorm(alpha[17] + beta.17.3 * profile[i,3],inv_epsilon[17])
+        logRT[i,18] ~ dnorm(alpha[18] + beta.18.1 * profile[i,1] + beta.18.2 * profile[i,2] + beta.18.12 * profile[i,1]* profile[i,2],inv_epsilon[18])
+        logRT[i,19] ~ dnorm(alpha[19] + beta.19.1 * profile[i,1] + beta.19.3 * profile[i,3] + beta.19.13 * profile[i,1]* profile[i,3],inv_epsilon[19])
+        logRT[i,20] ~ dnorm(alpha[20] + beta.20.2 * profile[i,2] + beta.20.3 * profile[i,3] + beta.20.23 * profile[i,2]* profile[i,3],inv_epsilon[20])
+        logRT[i,21] ~ dnorm(alpha[21] + beta.21.1 * profile[i,1] + beta.21.2 * profile[i,2] + beta.21.3 * profile[i,3] + 
+                           beta.21.12 * profile[i,1]* profile[i,2] + beta.21.13 * profile[i,1]* profile[i,3] + beta.21.23 * profile[i,2]* profile[i,3] + 
+                           beta.21.123 * profile[i,1]* profile[i,2] * profile[i,3], inv_epsilon[21])
+
+        logRT[i,22] ~ dnorm(alpha[22] + beta.22.1 * profile[i,1],inv_epsilon[22])
+        logRT[i,23] ~ dnorm(alpha[23] + beta.23.2 * profile[i,2],inv_epsilon[23])
+        logRT[i,24] ~ dnorm(alpha[24] + beta.24.3 * profile[i,3],inv_epsilon[24])
+        logRT[i,25] ~ dnorm(alpha[25] + beta.25.1 * profile[i,1] + beta.25.2 * profile[i,2] + beta.25.12 * profile[i,1]* profile[i,2],inv_epsilon[25])
+        logRT[i,26] ~ dnorm(alpha[26] + beta.26.1 * profile[i,1] + beta.26.3 * profile[i,3] + beta.26.13 * profile[i,1]* profile[i,3],inv_epsilon[26])
+        logRT[i,27] ~ dnorm(alpha[27] + beta.27.2 * profile[i,2] + beta.27.3 * profile[i,3] + beta.27.23 * profile[i,2]* profile[i,3],inv_epsilon[27])
+        logRT[i,28] ~ dnorm(alpha[28] + beta.28.1 * profile[i,1] + beta.28.2 * profile[i,2] + beta.28.3 * profile[i,3] + 
+                           beta.28.12 * profile[i,1]* profile[i,2] + beta.28.13 * profile[i,1]* profile[i,3] + beta.28.23 * profile[i,2]* profile[i,3] + 
+                           beta.28.123 * profile[i,1]* profile[i,2] * profile[i,3], inv_epsilon[28])
+
+        logRT[i,29] ~ dnorm(alpha[29] + beta.29.1 * profile[i,1],inv_epsilon[29])
+        logRT[i,30] ~ dnorm(alpha[30] + beta.30.2 * profile[i,2],inv_epsilon[30])
+        logRT[i,31] ~ dnorm(alpha[31] + beta.31.3 * profile[i,3],inv_epsilon[31])
+        logRT[i,32] ~ dnorm(alpha[32] + beta.32.1 * profile[i,1] + beta.32.2 * profile[i,2] + beta.32.12 * profile[i,1]* profile[i,2],inv_epsilon[32])
+        logRT[i,33] ~ dnorm(alpha[33] + beta.33.1 * profile[i,1] + beta.33.3 * profile[i,3] + beta.33.13 * profile[i,1]* profile[i,3],inv_epsilon[33])
+        logRT[i,34] ~ dnorm(alpha[34] + beta.34.2 * profile[i,2] + beta.34.3 * profile[i,3] + beta.34.23 * profile[i,2]* profile[i,3],inv_epsilon[34])
+        logRT[i,35] ~ dnorm(alpha[35] + beta.35.1 * profile[i,1] + beta.35.2 * profile[i,2] + beta.35.3 * profile[i,3] + 
+                           beta.35.12 * profile[i,1]* profile[i,2] + beta.35.13 * profile[i,1]* profile[i,3] + beta.35.23 * profile[i,2]* profile[i,3] + 
+                           beta.35.123 * profile[i,1]* profile[i,2] * profile[i,3], inv_epsilon[35])
+    }
+    for (j in 1:J){
+        alpha[j] ~ dnorm(0,0.1) 
+        inv_epsilon[j] ~ dgamma(1,1)
+        epsilon[j] <- sqrt(1/inv_epsilon[j])
+    }
+    pai[1:C] ~ ddirch(delta[1:C])
+    # main
+    beta.1.1 ~ dnorm(0,0.1) T(,0)
+    beta.2.2 ~ dnorm(0,0.1) T(,0)
+    beta.3.3 ~ dnorm(0,0.1) T(,0)
+    beta.4.1 ~ dnorm(0,0.1) T(,0)
+    beta.4.2 ~ dnorm(0,0.1) T(,0)
+    beta.5.1 ~ dnorm(0,0.1) T(,0)
+    beta.5.3 ~ dnorm(0,0.1) T(,0)
+    beta.6.2 ~ dnorm(0,0.1) T(,0)
+    beta.6.3 ~ dnorm(0,0.1) T(,0)
+    beta.7.1 ~ dnorm(0,0.1) T(,0)
+    beta.7.2 ~ dnorm(0,0.1) T(,0)
+    beta.7.3 ~ dnorm(0,0.1) T(,0)
+
+    beta.8.1 ~ dnorm(0,0.1) T(,0)
+    beta.9.2 ~ dnorm(0,0.1) T(,0)
+    beta.10.3 ~ dnorm(0,0.1) T(,0)
+    beta.11.1 ~ dnorm(0,0.1) T(,0)
+    beta.11.2 ~ dnorm(0,0.1) T(,0)
+    beta.12.1 ~ dnorm(0,0.1) T(,0)
+    beta.12.3 ~ dnorm(0,0.1) T(,0)
+    beta.13.2 ~ dnorm(0,0.1) T(,0)
+    beta.13.3 ~ dnorm(0,0.1) T(,0)
+    beta.14.1 ~ dnorm(0,0.1) T(,0)
+    beta.14.2 ~ dnorm(0,0.1) T(,0)
+    beta.14.3 ~ dnorm(0,0.1) T(,0)
+
+    beta.15.1 ~ dnorm(0,0.1) T(,0)
+    beta.16.2 ~ dnorm(0,0.1) T(,0)
+    beta.17.3 ~ dnorm(0,0.1) T(,0)
+    beta.18.1 ~ dnorm(0,0.1) T(,0)
+    beta.18.2 ~ dnorm(0,0.1) T(,0)
+    beta.19.1 ~ dnorm(0,0.1) T(,0)
+    beta.19.3 ~ dnorm(0,0.1) T(,0)
+    beta.20.2 ~ dnorm(0,0.1) T(,0)
+    beta.20.3 ~ dnorm(0,0.1) T(,0)
+    beta.21.1 ~ dnorm(0,0.1) T(,0)
+    beta.21.2 ~ dnorm(0,0.1) T(,0)
+    beta.21.3 ~ dnorm(0,0.1) T(,0)
+
+    beta.22.1 ~ dnorm(0,0.1) T(,0)
+    beta.23.2 ~ dnorm(0,0.1) T(,0)
+    beta.24.3 ~ dnorm(0,0.1) T(,0)
+    beta.25.1 ~ dnorm(0,0.1) T(,0)
+    beta.25.2 ~ dnorm(0,0.1) T(,0)
+    beta.26.1 ~ dnorm(0,0.1) T(,0)
+    beta.26.3 ~ dnorm(0,0.1) T(,0)
+    beta.27.2 ~ dnorm(0,0.1) T(,0)
+    beta.27.3 ~ dnorm(0,0.1) T(,0)
+    beta.28.1 ~ dnorm(0,0.1) T(,0)
+    beta.28.2 ~ dnorm(0,0.1) T(,0)
+    beta.28.3 ~ dnorm(0,0.1) T(,0)
+
+    beta.29.1 ~ dnorm(0,0.1) T(,0)
+    beta.30.2 ~ dnorm(0,0.1) T(,0)
+    beta.31.3 ~ dnorm(0,0.1) T(,0)
+    beta.32.1 ~ dnorm(0,0.1) T(,0)
+    beta.32.2 ~ dnorm(0,0.1) T(,0)
+    beta.33.1 ~ dnorm(0,0.1) T(,0)
+    beta.33.3 ~ dnorm(0,0.1) T(,0)
+    beta.34.2 ~ dnorm(0,0.1) T(,0)
+    beta.34.3 ~ dnorm(0,0.1) T(,0)
+    beta.35.1 ~ dnorm(0,0.1) T(,0)
+    beta.35.2 ~ dnorm(0,0.1) T(,0)
+    beta.35.3 ~ dnorm(0,0.1) T(,0)
+
+    # interactive
+    beta.4.12 ~ dnorm(0,0.1) 
+    beta.5.13 ~ dnorm(0,0.1) 
+    beta.6.23 ~ dnorm(0,0.1) 
+    beta.7.12 ~ dnorm(0,0.1) 
+    beta.7.13 ~ dnorm(0,0.1) 
+    beta.7.23 ~ dnorm(0,0.1) 
+    beta.7.123 ~ dnorm(0,0.1)
+
+    beta.11.12 ~ dnorm(0,0.1) 
+    beta.12.13 ~ dnorm(0,0.1) 
+    beta.13.23 ~ dnorm(0,0.1) 
+    beta.14.12 ~ dnorm(0,0.1) 
+    beta.14.13 ~ dnorm(0,0.1) 
+    beta.14.23 ~ dnorm(0,0.1) 
+    beta.14.123 ~ dnorm(0,0.1)
+
+    beta.18.12 ~ dnorm(0,0.1) 
+    beta.19.13 ~ dnorm(0,0.1) 
+    beta.20.23 ~ dnorm(0,0.1) 
+    beta.21.12 ~ dnorm(0,0.1) 
+    beta.21.13 ~ dnorm(0,0.1) 
+    beta.21.23 ~ dnorm(0,0.1) 
+    beta.21.123 ~ dnorm(0,0.1)
+
+    beta.25.12 ~ dnorm(0,0.1) 
+    beta.26.13 ~ dnorm(0,0.1) 
+    beta.27.23 ~ dnorm(0,0.1) 
+    beta.28.12 ~ dnorm(0,0.1) 
+    beta.28.13 ~ dnorm(0,0.1) 
+    beta.28.23 ~ dnorm(0,0.1) 
+    beta.28.123 ~ dnorm(0,0.1)
+
+    beta.32.12 ~ dnorm(0,0.1) 
+    beta.33.13 ~ dnorm(0,0.1) 
+    beta.34.23 ~ dnorm(0,0.1) 
+    beta.35.12 ~ dnorm(0,0.1) 
+    beta.35.13 ~ dnorm(0,0.1) 
+    beta.35.23 ~ dnorm(0,0.1) 
+    beta.35.123 ~ dnorm(0,0.1)
+}

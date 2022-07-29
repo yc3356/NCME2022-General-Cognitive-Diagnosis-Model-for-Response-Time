@@ -1,0 +1,42 @@
+model{
+    for (i in 1:I){
+        c[i] ~ dcat(pai[1:C])
+        profile[i,1:K] <- all.pattern[c[i],1:K]
+        logRT[i,1] ~ dnorm(alpha[1] + beta.1.1 * profile[i,1],inv_epsilon[1])
+        logRT[i,2] ~ dnorm(alpha[2] + beta.2.2 * profile[i,2],inv_epsilon[2])
+        logRT[i,3] ~ dnorm(alpha[3] + beta.3.3 * profile[i,3],inv_epsilon[3])
+        logRT[i,4] ~ dnorm(alpha[4] + beta.4.1 * profile[i,1] + beta.4.2 * profile[i,2] + beta.4.12 * profile[i,1]* profile[i,2],inv_epsilon[4])
+        logRT[i,5] ~ dnorm(alpha[5] + beta.5.1 * profile[i,1] + beta.5.3 * profile[i,3] + beta.5.13 * profile[i,1]* profile[i,3],inv_epsilon[5])
+        logRT[i,6] ~ dnorm(alpha[6] + beta.6.2 * profile[i,2] + beta.6.3 * profile[i,3] + beta.6.23 * profile[i,2]* profile[i,3],inv_epsilon[6])
+        logRT[i,7] ~ dnorm(alpha[7] + beta.7.1 * profile[i,1] + beta.7.2 * profile[i,2] + beta.7.3 * profile[i,3] + 
+                           beta.7.12 * profile[i,1]* profile[i,2] + beta.7.13 * profile[i,1]* profile[i,3] + beta.7.23 * profile[i,2]* profile[i,3] + 
+                           beta.7.123 * profile[i,1]* profile[i,2] * profile[i,3], inv_epsilon[7])
+    }
+    for (j in 1:J){
+        alpha[j] ~ dnorm(0,0.1) 
+        inv_epsilon[j] ~ dgamma(1,1)
+        epsilon[j] <- sqrt(1/inv_epsilon[j])
+    }
+    pai[1:C] ~ ddirch(delta[1:C])
+    # main
+    beta.1.1 ~ dnorm(0,0.1) T(,0)
+    beta.2.2 ~ dnorm(0,0.1) T(,0)
+    beta.3.3 ~ dnorm(0,0.1) T(,0)
+    beta.4.1 ~ dnorm(0,0.1) T(,0)
+    beta.4.2 ~ dnorm(0,0.1) T(,0)
+    beta.5.1 ~ dnorm(0,0.1) T(,0)
+    beta.5.3 ~ dnorm(0,0.1) T(,0)
+    beta.6.2 ~ dnorm(0,0.1) T(,0)
+    beta.6.3 ~ dnorm(0,0.1) T(,0)
+    beta.7.1 ~ dnorm(0,0.1) T(,0)
+    beta.7.2 ~ dnorm(0,0.1) T(,0)
+    beta.7.3 ~ dnorm(0,0.1) T(,0)
+    # interactive
+    beta.4.12 ~ dnorm(0,0.1) 
+    beta.5.13 ~ dnorm(0,0.1) 
+    beta.6.23 ~ dnorm(0,0.1) 
+    beta.7.12 ~ dnorm(0,0.1) 
+    beta.7.13 ~ dnorm(0,0.1) 
+    beta.7.23 ~ dnorm(0,0.1) 
+    beta.7.123 ~ dnorm(0,0.1)
+}
